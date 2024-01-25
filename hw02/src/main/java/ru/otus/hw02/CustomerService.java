@@ -1,10 +1,12 @@
 package ru.otus.hw02;
 
-import java.util.*;
+import java.util.Map;
+import java.util.NavigableMap;
+import java.util.TreeMap;
 
 public class CustomerService {
 
-    private NavigableMap<Customer, String> map;
+    private final NavigableMap<Customer, String> map = new TreeMap<>();
 
     public Map.Entry<Customer, String> getSmallest() {
         Map.Entry<Customer, String> firstEntry = map.firstEntry();
@@ -26,9 +28,6 @@ public class CustomerService {
     }
 
     public void add(Customer customer, String data) {
-        if (map == null) {
-            map = new TreeMap<>();
-        }
         map.put(customer, data);
     }
 
