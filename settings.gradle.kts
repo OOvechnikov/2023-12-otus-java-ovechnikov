@@ -3,6 +3,7 @@ include("hw01-gradle")
 include("hw02")
 include("hw03")
 include("hw03-framework")
+include("hw05-aop")
 
 pluginManagement {
     val jgitver: String by settings
