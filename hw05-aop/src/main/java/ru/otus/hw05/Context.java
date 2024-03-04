@@ -30,9 +30,16 @@ class Context {
         });
     }
 
-    public static TestLoggingInterface createProxy(TestLoggingInterface instance) {
-        val handler = new LogInvocationHandler<>(instance);
-        return ((TestLoggingInterface) Proxy.newProxyInstance(LogInvocationHandler.class.getClassLoader(), new Class[]{TestLoggingInterface.class}, handler));
+    public static Object createProxy(Object instance) {
+        val clazz = instance.getClass();
+        if (TestLoggingInterface.class.isAssignableFrom(clazz)) {
+            return Proxy.newProxyInstance(
+                    LogInvocationHandler.class.getClassLoader(),
+                    new Class[]{TestLoggingInterface.class},
+                    new LogInvocationHandler<>((TestLoggingInterface) instance)
+            );
+        }
+        throw new IllegalArgumentException("Создание Proxy для класса %s не поддерживается".formatted(clazz.getName()));
     }
 
     private static String methodToString(Method m) {
