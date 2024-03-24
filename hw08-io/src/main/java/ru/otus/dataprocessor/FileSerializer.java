@@ -1,14 +1,22 @@
 package ru.otus.dataprocessor;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+
+import java.io.File;
 import java.util.Map;
 
+@RequiredArgsConstructor
 public class FileSerializer implements Serializer {
 
-    public FileSerializer(String fileName) {}
+    private final String fileName;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
+    @SneakyThrows
     public void serialize(Map<String, Double> data) {
-        // формирует результирующий json и сохраняет его в файл
+        objectMapper.writeValue(new File(fileName), data);
     }
 
 }
