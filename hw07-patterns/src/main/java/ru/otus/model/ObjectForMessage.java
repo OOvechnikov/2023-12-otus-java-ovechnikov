@@ -14,7 +14,7 @@ public class ObjectForMessage implements Cloneable {
     private List<String> data;
 
     @Override
-    protected ObjectForMessage clone() throws CloneNotSupportedException {
+    protected ObjectForMessage clone() {
         val clone = new ObjectForMessage();
         clone.setData(new ArrayList<>(data));
         return clone;

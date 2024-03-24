@@ -8,16 +8,16 @@ import ru.otus.model.Message;
 
 public class HistoryListener implements Listener, HistoryReader {
 
-    private final Map<Long, Message> cash = new HashMap<>();
+    private final Map<Long, Message> cache = new HashMap<>();
 
     @Override
     public void onUpdated(Message msg) {
-        cash.put(msg.getId(), msg.toBuilder().build());
+        cache.put(msg.getId(), msg.clone());
     }
 
     @Override
     public Optional<Message> findMessageById(long id) {
-        return Optional.ofNullable(cash.get(id));
+        return Optional.ofNullable(cache.get(id));
     }
 
 }
