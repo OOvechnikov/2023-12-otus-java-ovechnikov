@@ -17,6 +17,10 @@ public class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
     @SneakyThrows
     public EntityClassMetaDataImpl(Class<T> clazz) {
         this.clazz = clazz;
+
+        if (CACHE.get(clazz) != null) {
+            return;
+        }
         val name = clazz.getSimpleName().toLowerCase();
         Field idField = null;
         val allFields = new ArrayList<Field>();
@@ -26,7 +30,7 @@ public class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
             }
             allFields.add(field);
         }
-        val allFieldsWithoutId = new ArrayList<Field>(allFields);
+        val allFieldsWithoutId = new ArrayList<>(allFields);
         allFieldsWithoutId.remove(idField);
         val constructor = clazz.getDeclaredConstructor();
         CACHE.put(clazz, new ClassMetaDataHolder(name, idField, allFields, allFieldsWithoutId, constructor));
