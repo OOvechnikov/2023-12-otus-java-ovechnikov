@@ -1,15 +1,23 @@
 package ru.otus.model;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.val;
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class ObjectForMessage {
+@Getter
+@Setter
+public class ObjectForMessage implements Cloneable {
+
     private List<String> data;
 
-    public List<String> getData() {
-        return data;
+    @Override
+    protected ObjectForMessage clone() {
+        val clone = new ObjectForMessage();
+        clone.setData(new ArrayList<>(data));
+        return clone;
     }
 
-    public void setData(List<String> data) {
-        this.data = data;
-    }
 }
