@@ -4,6 +4,9 @@ dependencies {
     implementation("com.zaxxer:HikariCP")
     implementation("org.postgresql:postgresql")
 
+    compileOnly("org.projectlombok:lombok")
+    annotationProcessor("org.projectlombok:lombok")
+
     testImplementation("org.junit.jupiter:junit-jupiter-engine")
     testImplementation("org.junit.jupiter:junit-jupiter-params")
     testImplementation("org.assertj:assertj-core")
