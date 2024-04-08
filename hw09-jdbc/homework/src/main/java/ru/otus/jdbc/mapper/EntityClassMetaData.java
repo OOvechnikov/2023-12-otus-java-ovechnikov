@@ -6,6 +6,7 @@ import java.util.List;
 
 /** "Разбирает" объект на составные части */
 public interface EntityClassMetaData<T> {
+
     String getName();
 
     Constructor<T> getConstructor();
@@ -17,4 +18,5 @@ public interface EntityClassMetaData<T> {
     List<Field> getAllFields();
 
     List<Field> getFieldsWithoutId();
+
 }
