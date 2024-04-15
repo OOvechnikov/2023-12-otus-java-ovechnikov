@@ -2,6 +2,7 @@ package ru.otus.core.repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
@@ -12,7 +13,7 @@ public class DataTemplateHibernate<T> implements DataTemplate<T> {
     private final Class<T> clazz;
 
     @Override
-    public Optional<T> findById(Session session, long id) {
+    public Optional<T> findById(Session session, UUID id) {
         return Optional.ofNullable(session.find(clazz, id));
     }
 
