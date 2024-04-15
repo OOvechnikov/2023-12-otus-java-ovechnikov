@@ -2,11 +2,13 @@ package ru.otus.core.repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
+
 import org.hibernate.Session;
 
 public interface DataTemplate<T> {
 
-    Optional<T> findById(Session session, long id);
+    Optional<T> findById(Session session, UUID id);
 
     List<T> findByEntityField(Session session, String entityFieldName, Object entityFieldValue);
 
