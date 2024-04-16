@@ -67,7 +67,6 @@ public class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
         return CACHE.get(clazz).fieldsWithoutId();
     }
 
-    private static final record ClassMetaDataHolder(String name, Field idField, List<Field> allFields, List<Field> fieldsWithoutId, Constructor<?> constructor) {
-    }
+    private record ClassMetaDataHolder(String name, Field idField, List<Field> allFields, List<Field> fieldsWithoutId, Constructor<?> constructor) {}
 
 }
