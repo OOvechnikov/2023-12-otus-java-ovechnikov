@@ -2,6 +2,8 @@ package ru.otus.mapper;
 
 import lombok.SneakyThrows;
 import lombok.val;
+import ru.otus.cachehw.HwCache;
+import ru.otus.cachehw.MyCache;
 import ru.otus.crm.model.Id;
 
 import java.lang.reflect.Constructor;
@@ -13,7 +15,7 @@ import java.util.Map;
 
 public class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
 
-    private static final Map<Class<?>, ClassMetaDataHolder> CACHE = new HashMap<>();
+    private static final HwCache<Class<?>, ClassMetaDataHolder> CACHE = new MyCache<>();
 
     private final Class<T> clazz;
 
@@ -67,7 +69,6 @@ public class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
         return CACHE.get(clazz).fieldsWithoutId();
     }
 
-    private static final record ClassMetaDataHolder(String name, Field idField, List<Field> allFields, List<Field> fieldsWithoutId, Constructor<?> constructor) {
-    }
+    private record ClassMetaDataHolder(String name, Field idField, List<Field> allFields, List<Field> fieldsWithoutId, Constructor<?> constructor) {}
 
 }
