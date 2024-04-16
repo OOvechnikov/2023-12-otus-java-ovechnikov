@@ -9,9 +9,7 @@ import ru.otus.crm.model.Id;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
 
@@ -47,7 +45,9 @@ public class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
         return CACHE.get(clazz).name();
     }
 
-    /** @noinspection unchecked*/
+    /**
+     * @noinspection unchecked
+     */
     @Override
     @SneakyThrows
     public Constructor<T> getConstructor() {
@@ -69,6 +69,8 @@ public class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
         return CACHE.get(clazz).fieldsWithoutId();
     }
 
-    private record ClassMetaDataHolder(String name, Field idField, List<Field> allFields, List<Field> fieldsWithoutId, Constructor<?> constructor) {}
+    private record ClassMetaDataHolder(String name, Field idField, List<Field> allFields, List<Field> fieldsWithoutId,
+                                       Constructor<?> constructor) {
+    }
 
 }
