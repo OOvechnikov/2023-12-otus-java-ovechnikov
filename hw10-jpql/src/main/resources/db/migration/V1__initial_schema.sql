@@ -1,18 +1,19 @@
--- Для @GeneratedValue(strategy = GenerationType.IDENTITY)
-/*
-create table client
+create table address
 (
-    id   bigserial not null primary key,
-    name varchar(50)
+    id uuid primary key,
+    street varchar(500)
 );
 
- */
-
--- Для @GeneratedValue(strategy = GenerationType.SEQUENCE)
-create sequence client_SEQ start with 1 increment by 1;
-
 create table client
 (
-    id   bigint not null primary key,
-    name varchar(50)
+    id   uuid primary key,
+    name varchar(50),
+    address_id uuid unique references address (id) on delete cascade on UPDATE cascade
+);
+
+create table phone
+(
+    id uuid primary key,
+    number varchar(10),
+    client_id uuid references client (id) on delete cascade on update cascade
 );
