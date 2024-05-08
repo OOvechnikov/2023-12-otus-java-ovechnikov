@@ -1,9 +1,12 @@
 package ru.otus.cachehw;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.WeakHashMap;
 
+@Slf4j
 public class MyCache<K, V> implements HwCache<K, V> {
 
     private final WeakHashMap<K, V> cache = new WeakHashMap<>();
@@ -12,21 +15,31 @@ public class MyCache<K, V> implements HwCache<K, V> {
     @Override
     public void put(K key, V value) {
         cache.put(key, value);
-        listeners.forEach(l -> l.notify(key, value, "put"));
+        notifyListeners(key, value, "put");
     }
 
     @Override
     public void remove(K key) {
         V value = cache.get(key);
         cache.remove(key);
-        listeners.forEach(l -> l.notify(key, value, "remove"));
+        notifyListeners(key, value, "remove");
     }
 
     @Override
     public V get(K key) {
         V value = cache.get(key);
-        listeners.forEach(l -> l.notify(key, value, "put"));
+        notifyListeners(key, value, "get");
         return value;
+    }
+
+    private void notifyListeners(K key, V value, String action) {
+        listeners.forEach(l -> {
+            try {
+                l.notify(key, value, action);
+            } catch (Exception e) {
+                log.warn("Unable to notify listener: {} for action: {} with key: {} and value: {}", l, action, key, value);
+            }
+        });
     }
 
     @Override
