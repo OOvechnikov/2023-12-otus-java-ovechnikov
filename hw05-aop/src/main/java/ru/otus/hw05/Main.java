@@ -6,20 +6,27 @@ public class Main {
 
     public static void main(String[] args) {
         val first = new FirstBusinessClass();
-        var proxy = (TestLoggingInterface) Context.createProxy(first);
-        proxy.method(2);
-        proxy.method(2, 4);
-        proxy.method(2, 4, 6);
-        proxy.method(2, 4, 6, "a;sldkfjsd");
+        val firstProxy = (TestLoggingInterface) Context.createProxy(first);
+        firstProxy.method(2);
+        firstProxy.method(2, 4);
+        firstProxy.method(2, 4, 6);
+        firstProxy.method(2, 4, 6, "a;sldkfjsd");
 
         System.out.println();
 
         val second = new SecondBusinessClass();
-        proxy = (TestLoggingInterface) Context.createProxy(second);
-        proxy.method(20);
-        proxy.method(20, 40);
-        proxy.method(20, 40, 60);
-        proxy.method(20, 40, 60, "String");
+        val secondProxy = (TestLoggingInterface) Context.createProxy(second);
+        secondProxy.method(20);
+        secondProxy.method(20, 40);
+        secondProxy.method(20, 40, 60);
+        secondProxy.method(20, 40, 60, "String");
+
+        System.out.println();
+
+        val third = new ThirdBusinessClass();
+        val thirdProxy = (SecondInterface) Context.createProxy(third);
+        thirdProxy.method("sdgdfdf");
+        thirdProxy.method(20, "fernenen");
 
         Context.createProxy("Should thrown exception.");
     }
