@@ -2,13 +2,18 @@ dependencies {
     implementation("ch.qos.logback:logback-classic")
     implementation("com.google.code.gson:gson")
 
-    implementation("org.eclipse.jetty.ee10:jetty-ee10-servlet")
-    implementation("org.eclipse.jetty:jetty-server")
-    implementation("org.eclipse.jetty.ee10:jetty-ee10-webapp")
-    implementation("org.eclipse.jetty:jetty-security")
-    implementation("org.eclipse.jetty:jetty-http")
-    implementation("org.eclipse.jetty:jetty-io")
-    implementation("org.eclipse.jetty:jetty-util")
+    implementation("org.hibernate.orm:hibernate-core")
+    implementation("org.flywaydb:flyway-core")
+
+    implementation("org.postgresql:postgresql")
+
+    implementation("org.eclipse.jetty.ee10:jetty-ee10-servlet:12.0.6")
+    implementation("org.eclipse.jetty:jetty-server:12.0.6")
+    implementation("org.eclipse.jetty.ee10:jetty-ee10-webapp:12.0.6")
+    implementation("org.eclipse.jetty:jetty-security:12.0.6")
+    implementation("org.eclipse.jetty:jetty-http:12.0.6")
+    implementation("org.eclipse.jetty:jetty-io:12.0.6")
+    implementation("org.eclipse.jetty:jetty-util:12.0.6")
     implementation("org.freemarker:freemarker")
 
     compileOnly("org.projectlombok:lombok")
