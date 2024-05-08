@@ -1,6 +1,8 @@
 package ru.otus.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -13,23 +15,26 @@ import org.springframework.data.relational.core.mapping.Table;
 import java.util.UUID;
 
 @Data
-@RequiredArgsConstructor
-//@RequiredArgsConstructor(onConstructor_ = @PersistenceCreator)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Table(name = "address")
 public class Address implements Persistable<UUID> {
 
     @JsonIgnore
     @Id
     @Column("client_id")
-    private final UUID clientId;
+    private UUID clientId;
 
     private final String street;
 
     @Transient
     private final boolean isNew;
 
+    public Address(String street) {
+        this(null, street, false);
+    }
+
     @PersistenceCreator
-    public Address(UUID clientId, String street) {
+    private Address(UUID clientId, String street) {
         this(clientId, street, false);
     }
 

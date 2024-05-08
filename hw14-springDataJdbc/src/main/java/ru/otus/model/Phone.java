@@ -12,23 +12,26 @@ import org.springframework.data.relational.core.mapping.Table;
 import java.util.UUID;
 
 @Data
-//@RequiredArgsConstructor(onConstructor_ = @PersistenceCreator)
-@RequiredArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Table(name = "phone")
 public class Phone implements Persistable<UUID> {
 
     @JsonIgnore
     @Id
     @Column("client_id")
-    private final UUID clientId;
+    private UUID clientId;
 
     private final String number;
 
     @Transient
     private final boolean isNew;
 
+    public Phone(String number) {
+        this(null, number, false);
+    }
+
     @PersistenceCreator
-    public Phone(UUID clientId, String number) {
+    private Phone(UUID clientId, String number) {
         this(clientId, number, false);
     }
 
