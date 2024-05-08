@@ -4,9 +4,12 @@
     <script>
         function getAllClients() {
             const userDataContainer = document.getElementById('userDataContainer');
-            fetch('api/clients')
+            fetch('api/v1/clients')
                 .then(response => response.json())
                 .then(user => userDataContainer.innerHTML = JSON.stringify(user));
+        }
+        function saveClient() {
+
         }
     </script>
 </head>
@@ -17,7 +20,7 @@
 <pre id = "userDataContainer"></pre>
 
 <h4>Создать клиента</h4>
-<form action="" method="post">
+<form id="clientsForm" action="" method="post" >
     <label for="clientName">Имя:</label>
     <input id="clientName" type="text" name="name" />
     <label for="clientAddress">Адрес:</label>
