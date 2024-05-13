@@ -12,7 +12,6 @@ import ru.otus.service.ClientsService;
 import java.util.List;
 
 @RestController
-//@RequestMapping("/api/v1/clients")
 @RequestMapping
 @RequiredArgsConstructor
 public class ClientsRestController {

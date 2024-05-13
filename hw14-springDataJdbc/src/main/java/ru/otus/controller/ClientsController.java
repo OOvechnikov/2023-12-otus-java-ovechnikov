@@ -20,10 +20,4 @@ public class ClientsController {
         return "clients";
     }
 
-//    @PostMapping("/clients")
-//    public ResponseEntity<?> saveClient(@RequestBody ClientDto clientDto) {
-//        clientsService.save(clientDto);
-//        return ResponseEntity.ok().build();
-//    }
-
 }
