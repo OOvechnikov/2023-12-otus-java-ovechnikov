@@ -3,7 +3,17 @@ include("hw01-gradle")
 include("hw02")
 include("hw03")
 include("hw03-framework")
+include("hw04-gc")
 include("hw05-aop")
+include("hw06-atm")
+include("hw07-patterns")
+include("hw08-io")
+include("hw09-jdbc:demo")
+include("hw09-jdbc:homework")
+include("hw10-jpql")
+include("hw11-cache")
+include("hw12-webServer")
+include("hw13-di")
 
 pluginManagement {
     val jgitver: String by settings
