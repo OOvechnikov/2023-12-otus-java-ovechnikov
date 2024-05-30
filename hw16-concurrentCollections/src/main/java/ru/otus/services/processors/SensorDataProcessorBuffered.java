@@ -1,6 +1,5 @@
 package ru.otus.services.processors;
 
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import ru.otus.api.SensorDataProcessor;
 import ru.otus.api.model.SensorData;
@@ -24,7 +23,6 @@ public class SensorDataProcessorBuffered implements SensorDataProcessor {
     }
 
     @Override
-    @SneakyThrows
     public synchronized void process(SensorData data) {
         dataBuffer.add(data);
         if (dataBuffer.size() >= bufferSize) {
