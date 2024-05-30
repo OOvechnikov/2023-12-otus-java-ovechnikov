@@ -1,36 +1,44 @@
 package ru.otus.services.processors;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import ru.otus.api.SensorDataProcessor;
 import ru.otus.api.model.SensorData;
 import ru.otus.lib.SensorDataBufferedWriter;
 
-// Этот класс нужно реализовать
+import java.util.NavigableSet;
+import java.util.concurrent.ConcurrentSkipListSet;
+
+@Slf4j
 @SuppressWarnings({"java:S1068", "java:S125"})
 public class SensorDataProcessorBuffered implements SensorDataProcessor {
-    private static final Logger log = LoggerFactory.getLogger(SensorDataProcessorBuffered.class);
 
     private final int bufferSize;
     private final SensorDataBufferedWriter writer;
+    private final NavigableSet<SensorData> dataBuffer;
 
     public SensorDataProcessorBuffered(int bufferSize, SensorDataBufferedWriter writer) {
         this.bufferSize = bufferSize;
         this.writer = writer;
+        dataBuffer = new ConcurrentSkipListSet<>();
     }
 
     @Override
-    public void process(SensorData data) {
-        /*
-            if (dataBuffer.size() >= bufferSize) {
-                flush();
-            }
-        */
+    @SneakyThrows
+    public synchronized void process(SensorData data) {
+        dataBuffer.add(data);
+        if (dataBuffer.size() >= bufferSize) {
+            flush();
+        }
     }
 
-    public void flush() {
+    public synchronized void flush() {
+        if (dataBuffer.isEmpty()) {
+            return;
+        }
         try {
-            // writer.writeBufferedData(bufferedData);
+            writer.writeBufferedData(dataBuffer.stream().toList());
+            dataBuffer.clear();
         } catch (Exception e) {
             log.error("Ошибка в процессе записи буфера", e);
         }
@@ -40,4 +48,5 @@ public class SensorDataProcessorBuffered implements SensorDataProcessor {
     public void onProcessingEnd() {
         flush();
     }
+
 }
