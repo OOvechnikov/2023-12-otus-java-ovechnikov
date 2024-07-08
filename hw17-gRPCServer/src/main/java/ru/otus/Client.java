@@ -5,8 +5,8 @@ import io.grpc.stub.StreamObserver;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
-import ru.otus.protobuf.ModelMessage;
-import ru.otus.protobuf.RemoteServiceGrpc;
+import ru.otus.protobuf.GrpcServiceGrpc;
+import ru.otus.protobuf.ValueMessage;
 
 @Slf4j
 public class Client {
@@ -17,16 +17,16 @@ public class Client {
     @SneakyThrows
     public static void main(String[] args) {
 
-        val newStub = RemoteServiceGrpc
+        val newStub = GrpcServiceGrpc
                 .newStub(ManagedChannelBuilder.forAddress("localhost", 8081)
                         .usePlaintext()
                         .build());
-        newStub.exchange(ModelMessage.newBuilder()
+        newStub.exchange(ValueMessage.newBuilder()
                 .setFirstValue(1)
                 .setLastValue(30)
                 .build(), new StreamObserver<>() {
             @Override
-            public void onNext(ModelMessage um) {
+            public void onNext(ValueMessage um) {
                 serverCurrentValue = um.getCurrentValue();
                 needToUpdateServerCurrentValue = true;
                 log.info("Число от сервера: " + um.getCurrentValue());

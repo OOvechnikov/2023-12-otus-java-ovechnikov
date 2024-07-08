@@ -4,12 +4,12 @@ package ru.otus.protobuf;
 
 option java_multiple_files = true;
 
-message ModelMessage {
+message ValueMessage {
   int64 firstValue = 1;
   int64 currentValue = 2;
   int64 lastValue = 3;
 }
 
-service RemoteService {
-  rpc exchange(ModelMessage) returns (stream ModelMessage);
+service GrpcService {
+  rpc exchange(ValueMessage) returns (stream ValueMessage);
 }
