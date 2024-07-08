@@ -17,7 +17,7 @@ include("hw13-di")
 include("hw14-springDataJdbc")
 include("hw15-executors")
 include("hw16-concurrentCollections")
-include("hw17-gRPCServer")
+include("hw17-gRPC")
 
 pluginManagement {
     val jgitver: String by settings
