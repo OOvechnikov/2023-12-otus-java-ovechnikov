@@ -1,7 +1,7 @@
 package ru.otus.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -13,16 +13,13 @@ import java.time.Duration;
 
 import static java.time.temporal.ChronoUnit.SECONDS;
 
+@RequiredArgsConstructor
 @Service
+@Slf4j
 public class DataStoreR2dbc implements DataStore {
-    private static final Logger log = LoggerFactory.getLogger(DataStoreR2dbc.class);
+
     private final MessageRepository messageRepository;
     private final Scheduler workerPool;
-
-    public DataStoreR2dbc(Scheduler workerPool, MessageRepository messageRepository) {
-        this.workerPool = workerPool;
-        this.messageRepository = messageRepository;
-    }
 
     @Override
     public Mono<Message> saveMessage(Message message) {
@@ -43,4 +40,5 @@ public class DataStoreR2dbc implements DataStore {
         return messageRepository.findAll()
                 .delayElements(Duration.of(3, SECONDS), workerPool);
     }
+
 }

@@ -59,7 +59,7 @@ public class MessageController {
             return;
         }
         val roomId = parseRoomId(simpDestination);
-        log.info("subscription for:{}, roomId:{}", simpDestination, roomId);
+        log.info("subscription for: {}, roomId: {}.", simpDestination, roomId);
         /*
         /user/3c3416b8-9b24-4c75-b38f-7c96953381d1/topic/response.1
          */
@@ -69,7 +69,7 @@ public class MessageController {
                 : getMessagesByRoomId(roomId);
 
         messages
-                .doOnError(ex -> log.error("getting messages for roomId:{} failed", roomId, ex))
+                .doOnError(ex -> log.error("getting messages for roomId: {} failed", roomId, ex))
                 .subscribe(message -> template.convertAndSend(simpDestination, message));
     }
 
