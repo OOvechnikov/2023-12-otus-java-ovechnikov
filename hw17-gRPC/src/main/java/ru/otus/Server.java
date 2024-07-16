@@ -14,7 +14,7 @@ public class Server {
         val server = ServerBuilder.forPort(8081).addService(new GrpcServiceImpl()).build();
         server.start();
 
-        log.info("Сервер ожидает подключений.");
+        log.info("РЎРµСЂРІРµСЂ РѕР¶РёРґР°РµС‚ РїРѕРґРєР»СЋС‡РµРЅРёР№.");
         server.awaitTermination();
     }
 

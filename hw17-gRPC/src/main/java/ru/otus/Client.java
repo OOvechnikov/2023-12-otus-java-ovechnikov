@@ -29,7 +29,7 @@ public class Client {
             public void onNext(ValueMessage um) {
                 serverCurrentValue = um.getCurrentValue();
                 needToUpdateServerCurrentValue = true;
-                log.info("Число от сервера: " + um.getCurrentValue());
+                log.info("Р§РёСЃР»Рѕ РѕС‚ СЃРµСЂРІРµСЂР°: " + um.getCurrentValue());
             }
 
             @Override
@@ -39,7 +39,7 @@ public class Client {
 
             @Override
             public void onCompleted() {
-                log.info("Конец.");
+                log.info("РљРѕРЅРµС†.");
             }
         });
 
@@ -52,7 +52,7 @@ public class Client {
                 currentValue = currentValue + 1L;
             }
 
-            log.info("Текущее значение: {}.", currentValue);
+            log.info("РўРµРєСѓС‰РµРµ Р·РЅР°С‡РµРЅРёРµ: {}.", currentValue);
             Thread.sleep(1000);
         }
 

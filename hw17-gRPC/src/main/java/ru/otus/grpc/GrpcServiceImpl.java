@@ -1,4 +1,4 @@
-package ru.otus.grpc;
+п»їpackage ru.otus.grpc;
 
 import io.grpc.stub.StreamObserver;
 import lombok.SneakyThrows;
@@ -12,11 +12,11 @@ public class GrpcServiceImpl extends GrpcServiceGrpc.GrpcServiceImplBase {
 
     @SneakyThrows
     public void exchange(ValueMessage request, StreamObserver<ValueMessage> responseObserver) {
-        log.info("Диапазон: " + request.getFirstValue() + "..." + request.getLastValue());
+        log.info("Р”РёР°РїР°Р·РѕРЅ: " + request.getFirstValue() + "..." + request.getLastValue());
 
         for (long i = request.getFirstValue(); i <= request.getLastValue(); i++) {
             Thread.sleep(2000);
-            log.info("Текущее значение сервера: " + i);
+            log.info("РўРµРєСѓС‰РµРµ Р·РЅР°С‡РµРЅРёРµ СЃРµСЂРІРµСЂР°: " + i);
 
             val model = ValueMessage.newBuilder()
                     .setCurrentValue(i)
