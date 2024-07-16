@@ -8,11 +8,14 @@ import lombok.val;
 import ru.otus.protobuf.GrpcServiceGrpc;
 import ru.otus.protobuf.ValueMessage;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicLong;
+
 @Slf4j
 public class Client {
 
-    private static long serverCurrentValue = 0;
-    private static boolean needToUpdateServerCurrentValue = false;
+    private static AtomicLong serverCurrentValue = new AtomicLong(0);
+    private static AtomicBoolean needToUpdateServerCurrentValue = new AtomicBoolean(false);
 
     @SneakyThrows
     public static void main(String[] args) {
@@ -27,8 +30,8 @@ public class Client {
                 .build(), new StreamObserver<>() {
             @Override
             public void onNext(ValueMessage um) {
-                serverCurrentValue = um.getCurrentValue();
-                needToUpdateServerCurrentValue = true;
+                serverCurrentValue.updateAndGet(v -> um.getCurrentValue());
+                needToUpdateServerCurrentValue.set(true);
                 log.info("Число от сервера: " + um.getCurrentValue());
             }
 
@@ -45,9 +48,9 @@ public class Client {
 
         long currentValue = 0;
         for (int i = 0; i < 50; i++) {
-            if (needToUpdateServerCurrentValue) {
-                currentValue = currentValue + serverCurrentValue + 1L;
-                needToUpdateServerCurrentValue = false;
+            if (needToUpdateServerCurrentValue.get()) {
+                currentValue = currentValue + serverCurrentValue.get() + 1L;
+                needToUpdateServerCurrentValue.set(false);
             } else {
                 currentValue = currentValue + 1L;
             }
