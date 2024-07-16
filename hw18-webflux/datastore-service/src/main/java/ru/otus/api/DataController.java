@@ -2,6 +2,7 @@ package ru.otus.api;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -21,9 +22,9 @@ public class DataController {
 
     @PostMapping(value = "/msg/{roomId}")
     public Mono<Long> messageFromChat(@PathVariable("roomId") String roomId, @RequestBody MessageDto messageDto) {
-        var messageStr = messageDto.messageStr();
+        val messageStr = messageDto.messageStr();
 
-        var msgId = Mono.just(new Message(roomId, messageStr))
+        val msgId = Mono.just(new Message(roomId, messageStr))
                 .doOnNext(msg -> log.info("messageFromChat:{}", msg))
                 .flatMap(dataStore::saveMessage)
                 .publishOn(workerPool)
