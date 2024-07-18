@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class Client {
 
     private static AtomicLong serverCurrentValue = new AtomicLong(0);
-    private static AtomicBoolean needToUpdateServerCurrentValue = new AtomicBoolean(false);
+    private static boolean needToUpdateServerCurrentValue = false;
 
     @SneakyThrows
     public static void main(String[] args) {
@@ -31,7 +31,7 @@ public class Client {
             @Override
             public void onNext(ValueMessage um) {
                 serverCurrentValue.updateAndGet(v -> um.getCurrentValue());
-                needToUpdateServerCurrentValue.set(true);
+                needToUpdateServerCurrentValue = true;
                 log.info("Число от сервера: " + um.getCurrentValue());
             }
 
@@ -48,9 +48,9 @@ public class Client {
 
         long currentValue = 0;
         for (int i = 0; i < 50; i++) {
-            if (needToUpdateServerCurrentValue.get()) {
-                currentValue = currentValue + serverCurrentValue.get() + 1L;
-                needToUpdateServerCurrentValue.set(false);
+            if (needToUpdateServerCurrentValue) {
+                currentValue = currentValue + serverCurrentValue.getAndSet(0) + 1L;
+                needToUpdateServerCurrentValue = false;
             } else {
                 currentValue = currentValue + 1L;
             }
