@@ -40,6 +40,7 @@ public class MessageController {
         saveMessage(roomId, message).subscribe(msgId -> log.info("message send id:{}", msgId));
 
         convertAndSend(roomId, message);
+        convertAndSend(_1408, message);
     }
 
     @EventListener
